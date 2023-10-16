@@ -1,4 +1,6 @@
-﻿namespace KooliProjekt.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KooliProjekt.Data
 {
     public class RealEstate
     {
@@ -7,10 +9,12 @@
         public string? RealEstateCountry { get; set; }
         public string? RealEstateCity { get; set; }
         public string? RealEstateAddress { get; set; }
-        public DateOnly? PurchaseDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
         public decimal? CurrentValue { get; set; }
-        public DateOnly? LastCurrentValueChangeTime {  get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? LastCurrentValueChangeTime {  get; set; }
         public string? InvestmentType { get; } = "RealEstate";
         public User User { get; set; }
         public bool CurrentlyOwned { get; set; }

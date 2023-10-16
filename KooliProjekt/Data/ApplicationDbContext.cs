@@ -16,5 +16,14 @@ namespace KooliProjekt.Data
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<Portfolio> UsersPortfolios { get; set; }
 
+        //mingil p]hjusel muidu ei teinud stockile ja transactionile primary keyd. 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Stocks>().HasKey(s => s.StockId);
+            modelBuilder.Entity<Transactions>().HasKey(s => s.TransactionId);
+        }
+
     }
 }

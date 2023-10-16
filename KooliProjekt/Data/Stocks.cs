@@ -7,7 +7,6 @@ namespace KooliProjekt.Data
         public int StockId {  get; set; }
         public string? StockName { get; set;}
         public string? StockTicker {  get; set; }
-
         [DataType(DataType.Date)]
         public DateTime? StockInvestmentDate{ get; set; }
         public decimal? StockAmount { get; set; }
