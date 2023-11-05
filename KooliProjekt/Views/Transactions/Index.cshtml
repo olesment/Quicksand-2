@@ -1,0 +1,71 @@
+﻿@model IEnumerable<KooliProjekt.Data.Transactions>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvestmentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssetId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Action)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactedAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionUnitCost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionResult)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InvestmentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssetId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Action)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactedAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionUnitCost)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionResult)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TransactionId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TransactionId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TransactionId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

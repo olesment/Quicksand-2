@@ -1,0 +1,72 @@
+﻿@model KooliProjekt.Data.RealEstate
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>RealEstate</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RealEstateName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RealEstateName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RealEstateCountry)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RealEstateCountry)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RealEstateCity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RealEstateCity)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RealEstateAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RealEstateAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchaseDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PurchaseDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PurchasePrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PurchasePrice)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastCurrentValueChangeTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastCurrentValueChangeTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentlyOwned)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CurrentlyOwned)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.RealEstateId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

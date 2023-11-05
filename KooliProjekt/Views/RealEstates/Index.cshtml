@@ -1,0 +1,87 @@
+﻿@*@model IEnumerable<KooliProjekt.Data.RealEstate>*@
+@model PagedResult<RealEstate>
+@*Kooliptojekt data viisime viewimportsi 04.11 gunns t 2 v 3*@
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                RealEstateName @*@Html.DisplayNameFor(model => model.RealEstateName) Oli selline 04.11*@
+            </th>
+            <th>
+                Country @*@Html.DisplayNameFor(model => model.RealEstateCountry)*@
+            </th>
+            <th>
+               City @*@Html.DisplayNameFor(model => model.RealEstateCity)*@
+            </th>
+            <th>
+                Address @*@Html.DisplayNameFor(model => model.RealEstateAddress)*@
+            </th>
+            <th>
+                Purchase Date @*@Html.DisplayNameFor(model => model.PurchaseDate)*@
+            </th>
+            <th>
+                Purchase Price @*@Html.DisplayNameFor(model => model.PurchasePrice)*@
+            </th>
+            <th>
+                Current Value @*@Html.DisplayNameFor(model => model.CurrentValue)*@
+            </th>
+            <th>
+                Last Current Value Change Time @*@Html.DisplayNameFor(model => model.LastCurrentValueChangeTime)*@
+            </th>
+            <th>
+                Currently Owned @*@Html.DisplayNameFor(model => model.CurrentlyOwned)*@
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Results) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstateName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstateCountry)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstateCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RealEstateAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PurchasePrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastCurrentValueChangeTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentlyOwned)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RealEstateId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RealEstateId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RealEstateId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@*Kudias ajada view component listi k[lge 04.11/ Gunns t 2 v 3. Kui todole pageri panime. *@
+@(await Component.InvokeAsync<PagerViewComponent>(new { result = Model, viewName = "Default" }))

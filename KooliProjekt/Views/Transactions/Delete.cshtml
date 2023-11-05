@@ -1,0 +1,63 @@
+﻿@model KooliProjekt.Data.Transactions
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Transactions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InvestmentType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InvestmentType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssetId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Action)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Action)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactedAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactedAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionUnitCost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionUnitCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionResult)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionResult)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="TransactionId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

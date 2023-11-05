@@ -1,0 +1,76 @@
+﻿@model KooliProjekt.Data.RealEstate
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>RealEstate</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="RealEstateId" />
+            <div class="form-group">
+                <label asp-for="RealEstateName" class="control-label"></label>
+                <input asp-for="RealEstateName" class="form-control" />
+                <span asp-validation-for="RealEstateName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RealEstateCountry" class="control-label"></label>
+                <input asp-for="RealEstateCountry" class="form-control" />
+                <span asp-validation-for="RealEstateCountry" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RealEstateCity" class="control-label"></label>
+                <input asp-for="RealEstateCity" class="form-control" />
+                <span asp-validation-for="RealEstateCity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RealEstateAddress" class="control-label"></label>
+                <input asp-for="RealEstateAddress" class="form-control" />
+                <span asp-validation-for="RealEstateAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchaseDate" class="control-label"></label>
+                <input asp-for="PurchaseDate" class="form-control" />
+                <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchasePrice" class="control-label"></label>
+                <input asp-for="PurchasePrice" class="form-control" />
+                <span asp-validation-for="PurchasePrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentValue" class="control-label"></label>
+                <input asp-for="CurrentValue" class="form-control" />
+                <span asp-validation-for="CurrentValue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastCurrentValueChangeTime" class="control-label"></label>
+                <input asp-for="LastCurrentValueChangeTime" class="form-control" />
+                <span asp-validation-for="LastCurrentValueChangeTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="CurrentlyOwned" /> @Html.DisplayNameFor(model => model.CurrentlyOwned)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

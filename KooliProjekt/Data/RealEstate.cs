@@ -16,7 +16,8 @@ namespace KooliProjekt.Data
         [DataType(DataType.Date)]
         public DateTime? LastCurrentValueChangeTime {  get; set; }
         public string? InvestmentType { get; } = "RealEstate";
-        public User User { get; set; }
+
+       // public User User { get; set; } kuidagi peab useriga ju siduma
         public bool CurrentlyOwned { get; set; }
     }
 }

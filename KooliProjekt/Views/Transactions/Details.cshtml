@@ -1,0 +1,60 @@
+﻿@model KooliProjekt.Data.Transactions
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Transactions</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.InvestmentType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.InvestmentType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AssetId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AssetId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Action)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Action)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactedAmount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactedAmount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionUnitCost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionUnitCost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TransactionResult)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TransactionResult)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TransactionId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
