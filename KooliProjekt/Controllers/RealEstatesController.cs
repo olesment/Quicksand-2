@@ -12,14 +12,14 @@ namespace KooliProjekt.Controllers
 {
     public class RealEstatesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context; eemaldatud 05.11.t3 raames
         private readonly IRealEstatesService _realEstatesService; // lisatid 05.11 t3 raames selleks et service hakkaks t;;le l2bi program cs builderi. 
 
         //See annab ligipääsu andmebaasile opereerimiseks seal. 
-        public RealEstatesController(ApplicationDbContext context, IRealEstatesService realEstatesService)
+        public RealEstatesController(/*ApplicationDbContext context,*/ IRealEstatesService realEstatesService)
         /*lisatud IrealestateService + realestateService selleks et dbkontekstist vaikselt loobuda. 05.11. t3 raames.*/ // Selle võtame ära ja paneme RealEstatesService alla 05.11
         {
-            _context = context;
+           // _context = context;
             
             _realEstatesService = realEstatesService;
             /*controller tohib n2ha ainult service interfacei. lisatud 05.11. t3 raames. 1:46*/
@@ -73,13 +73,14 @@ namespace KooliProjekt.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _realEstatesService.Save(realEstate);
+                return View(realEstate);
                 ///* asendatud ja viidud Service ja selle interface alla 05.11 t3 raames. 
                 ///_context.Add(realEstate);*/
                // await _context.SaveChangesAsync();*/
-                return RedirectToAction(nameof(Index));
             }
-            return View(realEstate);
+            
+            await _realEstatesService.Save(realEstate);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: RealEstates/Edit/5 //REDIGEERIMISVORM
@@ -114,7 +115,7 @@ namespace KooliProjekt.Controllers
 
             if (ModelState.IsValid)
             {
-                await _realEstatesService.Save(realEstate);
+                return View(realEstate);
                 //try
                 //{
                 //    _context.Update(realEstate);
@@ -131,21 +132,24 @@ namespace KooliProjekt.Controllers
                 //        throw;
                 //    }
                 //}
-                return RedirectToAction(nameof(Index));
+
             }
-            return View(realEstate);
+            await _realEstatesService.Save(realEstate);
+            return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: RealEstates/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.RealEstates == null)
+            if (id == null /*|| _context.RealEstates == null*/)
             {
                 return NotFound();
             }
 
-            var realEstate = await _context.RealEstates
-                .FirstOrDefaultAsync(m => m.RealEstateId == id);
+            var realEstate = await _realEstatesService.GetById(id.Value); //05.11 t3. 
+                /*_context.RealEstates
+                .FirstOrDefaultAsync(m => m.RealEstateId == id);*/
             if (realEstate == null)
             {
                 return NotFound();
@@ -159,17 +163,19 @@ namespace KooliProjekt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.RealEstates == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.RealEstates'  is null.");
-            }
-            var realEstate = await _context.RealEstates.FindAsync(id);
-            if (realEstate != null)
-            {
-                _context.RealEstates.Remove(realEstate);
-            }
-            
-            await _context.SaveChangesAsync();
+            //if (_context.RealEstates == null)
+            //{
+            //    return Problem("Entity set 'ApplicationDbContext.RealEstates'  is null.");
+            //}
+            //mahav6etud sest kontekst l2heb maha
+            //var realEstate = await _context.RealEstates.FindAsync(id);
+            //if (realEstate != null)
+            //{
+            //    _context.RealEstates.Remove(realEstate);
+            //}
+
+            //await _context.SaveChangesAsync();
+            await _realEstatesService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 

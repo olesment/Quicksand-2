@@ -1,4 +1,5 @@
 ﻿using KooliProjekt.Data; //loodud 05.11 T3 raames. 
+using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Services
@@ -37,6 +38,17 @@ namespace KooliProjekt.Services
             }
             await _context.SaveChangesAsync();
         }
+
+        public async Task Delete(int id) 
+        {
+            var realEstate = await _context.RealEstates.FindAsync(id);
+            if (realEstate != null)
+            {
+                _context.RealEstates.Remove(realEstate);
+            }
+            await _context.SaveChangesAsync();
+        }
+
     }   
 
 }
