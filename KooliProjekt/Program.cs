@@ -1,4 +1,5 @@
 using KooliProjekt.Data;
+using KooliProjekt.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,12 @@ namespace KooliProjekt
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
             builder.Services.AddControllersWithViews();
+
+            // lisme mingi registreerimise selleks et serviced hakkaksid t;;le 05.11 t3
+            builder.Services.AddScoped<IRealEstatesService, RealEstatesService>(); //Add IrealEstatesService millele vastab RealEstates Service 05.11. t3
 
             var app = builder.Build();
 
