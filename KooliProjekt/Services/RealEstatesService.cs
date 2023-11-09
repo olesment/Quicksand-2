@@ -25,7 +25,6 @@ namespace KooliProjekt.Services
 
             return result;
         }
-
         public async Task Save(RealEstate realEstate)
         {
             if(realEstate.RealEstateId == null)
@@ -49,6 +48,11 @@ namespace KooliProjekt.Services
             await _context.SaveChangesAsync();
         }
 
+        public bool RealEstateExists(int id)
+        {
+            return (_context.RealEstates?.Any(e => e.RealEstateId == id)).GetValueOrDefault();
+            
+        }
     }   
 
 }

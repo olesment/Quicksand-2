@@ -17,20 +17,20 @@ namespace KooliProjekt.Controllers
 
         //See annab ligipääsu andmebaasile opereerimiseks seal. 
         public RealEstatesController(/*ApplicationDbContext context,*/ IRealEstatesService realEstatesService)
-        /*lisatud IrealestateService + realestateService selleks et dbkontekstist vaikselt loobuda. 05.11. t3 raames.*/ // Selle võtame ära ja paneme RealEstatesService alla 05.11
+        /*lisatud IrealestateService + realestateService selleks et dbkontekstist vaikselt loobuda. 05.11. t3 raames.
+        dbContextist loobumine andis v]imaluse siit failist eemaldada context asjad., sest 
+        /*controller tohib n2ha ainult service interfacei. lisatud 05.11. t3 raames. 1:46*/
         {
            // _context = context;
-            
             _realEstatesService = realEstatesService;
-            /*controller tohib n2ha ainult service interfacei. lisatud 05.11. t3 raames. 1:46*/
         }
 
-        // GET: RealEstates// INDEX MEETOD
+        // GET: RealEstates// INDEX MEETOD----------INDEX---------------INDEX
         public async Task<IActionResult> Index(int page = 1) //31.10 lisati parameeter page // Kui Realestates tabel ei ole tühi siis annab selles olevad read välja
         {
             var result = await _realEstatesService.List(page, 3);
             /*await _context.RealEstates.GetPagedAsync(page, pageSize: 3); 
-             * // eemaldatud ja topitud servisesse ja selle interfacei asemele see mis kirjas. 05.11. t3 raames.*/
+            eemaldatud ja topitud servisesse ja selle interfacei asemele see mis kirjas. 05.11. t3 raames.*/
 
             return View(result); 
             //return _context.RealEstates != null ? 
@@ -48,17 +48,16 @@ namespace KooliProjekt.Controllers
 
             var realEstate = await _realEstatesService.GetById(id.Value);
             /*muudetud 05.11. t3 raames.                
-                /*_context.RealEstates
-                .FirstOrDefaultAsync(m => m.RealEstateId == id); asendatud 05.11. t3 raames, viidud service ja interface alla. */
+            _context.RealEstates
+            .FirstOrDefaultAsync(m => m.RealEstateId == id); asendatud 05.11. t3 raames, viidud service ja interface alla. */
             if (realEstate == null)
             {
                 return NotFound();
             }
-
             return View(realEstate);
         }
 
-        // GET: RealEstates/Create
+        // GET: RealEstates/Create CREATE MEETOD
         public IActionResult Create()
         {
             return View();
@@ -73,17 +72,16 @@ namespace KooliProjekt.Controllers
         {
             if (ModelState.IsValid)
             {
-                return View(realEstate);
-                ///* asendatud ja viidud Service ja selle interface alla 05.11 t3 raames. 
-                ///_context.Add(realEstate);*/
+               ///* asendatud ja viidud Service ja selle interface alla 05.11 t3 raames. 
+               ///_context.Add(realEstate);*/
                // await _context.SaveChangesAsync();*/
+                await _realEstatesService.Save(realEstate);
+                return RedirectToAction(nameof(Index));
             }
-            
-            await _realEstatesService.Save(realEstate);
-            return RedirectToAction(nameof(Index));
+            return View(realEstate);
         }
 
-        // GET: RealEstates/Edit/5 //REDIGEERIMISVORM
+        // GET: RealEstates/Edit/5//REDIGEERIMISVORM
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null /*|| _context.RealEstates == null*/) //osa v2ljakommenteeritud vastavalt t3 tunnile 1:59 05.11
@@ -92,11 +90,11 @@ namespace KooliProjekt.Controllers
             }
 
             var realEstate = await _realEstatesService.GetById(id.Value);// _context.RealEstates.FindAsync(id);
-            if (realEstate == null)
-            {
-                return NotFound();
-            }
             return View(realEstate);
+            //if (realEstate == null)
+            //{
+            //    return NotFound();
+            //}
         }
 
         // POST: RealEstates/Edit/5
@@ -115,7 +113,6 @@ namespace KooliProjekt.Controllers
 
             if (ModelState.IsValid)
             {
-                return View(realEstate);
                 //try
                 //{
                 //    _context.Update(realEstate);
@@ -132,11 +129,10 @@ namespace KooliProjekt.Controllers
                 //        throw;
                 //    }
                 //}
-
-            }
             await _realEstatesService.Save(realEstate);
             return RedirectToAction(nameof(Index));
-            
+            }
+            return View(realEstate);           
         }
 
         // GET: RealEstates/Delete/5
@@ -146,7 +142,6 @@ namespace KooliProjekt.Controllers
             {
                 return NotFound();
             }
-
             var realEstate = await _realEstatesService.GetById(id.Value); //05.11 t3. 
                 /*_context.RealEstates
                 .FirstOrDefaultAsync(m => m.RealEstateId == id);*/
@@ -154,7 +149,6 @@ namespace KooliProjekt.Controllers
             {
                 return NotFound();
             }
-
             return View(realEstate);
         }
 
@@ -173,7 +167,6 @@ namespace KooliProjekt.Controllers
             //{
             //    _context.RealEstates.Remove(realEstate);
             //}
-
             //await _context.SaveChangesAsync();
             await _realEstatesService.Delete(id);
             return RedirectToAction(nameof(Index));
@@ -181,7 +174,8 @@ namespace KooliProjekt.Controllers
 
         private bool RealEstateExists(int id)
         {
-          return (_context.RealEstates?.Any(e => e.RealEstateId == id)).GetValueOrDefault();
+         return _realEstatesService.RealEstateExists(id);
+         //return (_context.RealEstates?.Any(e => e.RealEstateId == id)).GetValueOrDefault();
         }
     }
 }
