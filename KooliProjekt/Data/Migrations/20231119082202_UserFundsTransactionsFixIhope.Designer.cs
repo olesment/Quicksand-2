@@ -4,6 +4,7 @@ using KooliProjekt.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KooliProjekt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231119082202_UserFundsTransactionsFixIhope")]
+    partial class UserFundsTransactionsFixIhope
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -221,34 +223,6 @@ namespace KooliProjekt.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("KooliProjekt.Data.UserFunds", b =>
-                {
-                    b.Property<int>("FundID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FundID"), 1L, 1);
-
-                    b.Property<decimal?>("Balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("DepositedFunds")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("FundName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal?>("LockedFunds")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("WithdrawnFunds")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("FundID");
-
-                    b.ToTable("UserFunds");
-                });
-
             modelBuilder.Entity("KooliProjekt.Data.UserFundsTransaction", b =>
                 {
                     b.Property<int>("FundsTransactionId")
@@ -275,7 +249,7 @@ namespace KooliProjekt.Data.Migrations
 
                     b.HasKey("FundsTransactionId");
 
-                    b.ToTable("UserFundsTransactions");
+                    b.ToTable("FundsTransaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

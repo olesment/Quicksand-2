@@ -8,8 +8,8 @@
         public decimal? Balance { get; set; } // vabad vahendid uuteks investeeringuteks v\i v2ljav6tmiseks. 
         public decimal? DepositedFunds { get; set; } // platvormile kantud vahendid
         public decimal? LockedFunds {  get; set; } //vahendid mison investeeringute all kinni
-       // public decimal? TotalFunds { get; set; } // vahendid kokku
-
+                                                // public decimal? TotalFunds { get; set; } // vahendid kokku
+        public decimal? WithdrawnFunds { get; set; } // funds that have been withdrawn
 
     }
 }

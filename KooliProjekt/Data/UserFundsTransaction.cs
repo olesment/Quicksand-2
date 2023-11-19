@@ -1,6 +1,6 @@
 ﻿namespace KooliProjekt.Data // 13.11 class for tracking funds movement
 {
-    public class FundsTransaction
+    public class UserFundsTransaction // renamed to userFunds Transaction 19.11
     {
         public int FundsTransactionId { get; set; } 
         public int FundID { get; set; } // Foreign key to the UserFunds
