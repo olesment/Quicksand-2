@@ -117,7 +117,7 @@ namespace KooliProjekt.Controllers
                 var success = await _userFundsTransactionsService.Deposit(model.FundID, model.Amount, model.Comment);
                 if (success)
                 {
-                    return RedirectToAction("SuccessView");
+                    return RedirectToAction("Index", "UserFundsTransactions");
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace KooliProjekt.Controllers
             if (ModelState.IsValid)
             {
                 var success = await _userFundsTransactionsService.Withdraw(model.FundID,model.Amount,model.Comment);
-                return RedirectToAction("SuccessView");
+                return RedirectToAction("Index", "UserFundsTransactions");
             }
             return View(model);
         }

@@ -17,7 +17,7 @@ namespace KooliProjekt.Services
 
         public async Task<PagedResult<UserFundsTransaction>>List(int page, int pageSize)
         {
-            var result = await _context.UserFundsTransactions.GetPagedAsync(page, pageSize:3);
+            var result = await _context.UserFundsTransactions.GetPagedAsync(page, /*pageSize:*/ 3);
             return result;
         }
 
