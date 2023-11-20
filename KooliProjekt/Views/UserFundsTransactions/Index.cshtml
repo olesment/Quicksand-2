@@ -1,9 +1,15 @@
-﻿@model IEnumerable<KooliProjekt.Data.UserFundsTransaction>
+﻿@*model IEnumerable<KooliProjekt.Data.UserFundsTransaction>*@
+@model KooliProjekt.Data.PagedResult<KooliProjekt.Data.UserFundsTransaction>
 
 @{
     ViewData["Title"] = "Index";
 }
+<h2>Transactions</h2>
 
+<p>
+    <a asp-action="Deposit" class="btn btn-primary">Deposit</a>
+    <a asp-action="Withdraw" class="btn btn-primary">Withdraw</a>
+</p>
 <h2>Index</h2>
 
 <p>
@@ -13,25 +19,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FundID)
+                FundID@*Html.DisplayNameFor(model => model.FundID)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Amount)
+                Amount @*Html.DisplayNameFor(model => model.Amount)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactionDate)
+                TransaCtionDate @*Html.DisplayNameFor(model => model.TransactionDate)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactionType)
+                Transactiontype @*Html.DisplayNameFor(model => model.TransactionType)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comment)
+               Comment @*Html.DisplayNameFor(model => model.Comment)*@
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Results) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.FundID)
@@ -57,3 +63,5 @@
 }
     </tbody>
 </table>
+@*Lisatud pager 19.11*@
+@(await Component.InvokeAsync<PagerViewComponent>(new { result = Model, viewName = "Default" }))
