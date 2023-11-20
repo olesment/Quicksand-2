@@ -132,11 +132,19 @@ namespace KooliProjekt.Controllers
         {
             if (ModelState.IsValid)
             {
-                var success = await _userFundsTransactionsService.Withdraw(model.FundID,model.Amount,model.Comment);
-                return RedirectToAction("Index", "UserFundsTransactions");
+                var success = await _userFundsTransactionsService.Withdraw(model.FundID, model.Amount, model.Comment);
+                if (success)
+                {
+                    return RedirectToAction("Index", "UserFundsTransactions");
+                }
+                else
+                {
+                    return View(model); // ma ei tea mida see t'pselt teeb. 
+                }
             }
             return View(model);
         }
+     
 
         // GET: UserFundsTransactions/Edit/5
         //public async Task<IActionResult> Edit(int? id)

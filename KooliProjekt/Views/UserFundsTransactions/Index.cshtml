@@ -4,16 +4,16 @@
 @{
     ViewData["Title"] = "Index";
 }
-<h2>Transactions</h2>
+<h2>Wallet Transactions</h2>
 
 <p>
     <a asp-action="Deposit" class="btn btn-primary">Deposit</a>
     <a asp-action="Withdraw" class="btn btn-primary">Withdraw</a>
 </p>
-<h2>Index</h2>
+<h2>Wallet Transactions History</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <!--a asp-action="Create">Create New</!--a-->
 </p>
 <table class="table">
     <thead>
@@ -22,13 +22,13 @@
                 FundID@*Html.DisplayNameFor(model => model.FundID)*@
             </th>
             <th>
+                Transactiontype @*Html.DisplayNameFor(model => model.TransactionType)*@
+            </th>
+            <th>
                 Amount @*Html.DisplayNameFor(model => model.Amount)*@
             </th>
             <th>
                 TransaCtionDate @*Html.DisplayNameFor(model => model.TransactionDate)*@
-            </th>
-            <th>
-                Transactiontype @*Html.DisplayNameFor(model => model.TransactionType)*@
             </th>
             <th>
                Comment @*Html.DisplayNameFor(model => model.Comment)*@
@@ -42,22 +42,37 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FundID)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
+           <td>
+                @Html.DisplayFor(modelItem => item.TransactionType)
             </td>
+           
+         @*<td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td >*@
+            <td>
+                    @if (item.TransactionType == TransactionType.Withdrawal)
+                    {
+                        @Html.Raw("-" + item.Amount)
+
+                    }
+                    else
+                    {
+                        @item.Amount;
+                    }
+            </td>@*Lisatud miinuse panek enne  withdrawali v''rtust*@
             <td>
                 @Html.DisplayFor(modelItem => item.TransactionDate)
             </td>
-            <td>
+           @* <td>
                 @Html.DisplayFor(modelItem => item.TransactionType)
-            </td>
+            </td>20.11 tabeli loogilisemaks tegemine, viidud ylesse*@ 
             <td>
                 @Html.DisplayFor(modelItem => item.Comment)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.FundsTransactionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.FundsTransactionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.FundsTransactionId">Delete</a>
+                <!--<a asp-action="Edit" asp-route-id="@item.FundsTransactionId">Edit</a> | 20.11 eemaldatus sest seal ei tohi olla. -->
+                <!--a asp-action="Delete" asp-route-id="@item.FundsTransactionId">Delete</!--a-->
+                <a asp-action="Details" asp-route-id="@item.FundsTransactionId">Details</a> <!--|-->
             </td>
         </tr>
 }

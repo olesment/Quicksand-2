@@ -27,9 +27,14 @@ namespace KooliProjekt.Services
                 .FirstOrDefaultAsync(m => m.FundsTransactionId == id);
             return result; 
         }
-
+        //DEPOSIT
         public async Task<bool> Deposit(int fundID, decimal amount, string comment)
         {
+            if (amount <= 0)
+            {
+                return false;
+            }
+
             var userFund = await _context.UserFunds.FindAsync(fundID);
             if (userFund == null) return false;
 
@@ -55,6 +60,10 @@ namespace KooliProjekt.Services
 
         public async Task<bool> Withdraw(int fundID, decimal amount, string comment)
         {
+            if (amount <= 0)
+            {
+                return false;
+            }
             var userFund = await _context.UserFunds.FindAsync(fundID);
             if (userFund == null || userFund.Balance < amount) return false;
 
