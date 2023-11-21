@@ -57,7 +57,7 @@ namespace KooliProjekt.Services
             return true;
 
         }
-        //just adding random comment so i can make a commit. with long description in a new branch. 
+        //just adding random comment so i can make a commit. with long description in a new branch. .
         public async Task<bool> Withdraw(int fundID, decimal amount, string comment)
         {
             if (amount <= 0)
