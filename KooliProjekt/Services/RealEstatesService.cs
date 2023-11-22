@@ -80,8 +80,8 @@ namespace KooliProjekt.Services
              };
             _context.RealEstates.Add(newRealEstate);
 
-            userFunds.Balance = userFunds.Balance - model.PurchasePrice;
-            userFunds.LockedFunds += model.PurchasePrice;
+            userFunds.Balance -= model.PurchasePrice.Value; // siin istub mingi viga, mis genereerib nein NULL e
+            userFunds.LockedFunds += model.PurchasePrice.Value;
 
             await _context.SaveChangesAsync();
             return true;    
