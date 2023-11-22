@@ -1,6 +1,6 @@
 ﻿@*model IEnumerable<KooliProjekt.Data.UserFundsTransaction>*@
 @model KooliProjekt.Data.PagedResult<KooliProjekt.Data.UserFundsTransaction>
-@model KooliProjekt.Models.UserFundsStatusViewModel
+@*model KooliProjekt.Models.UserFundsStatusViewModel 23.11 1 model per view.*@
 @{
     ViewData["Title"] = "Index";
 }
@@ -78,5 +78,12 @@
 }
     </tbody>
 </table>
+<div>
+    @await Component.InvokeAsync("UserFundsStatus")
+</div>
 @*Lisatud pager 19.11*@
 @(await Component.InvokeAsync<PagerViewComponent>(new { result = Model, viewName = "Default" }))
+@*(await Component.InvokeAsync<UserFundsStatusViewComponent>(new {result = Model, viewName = "Default"})) See rida teeb katki kuidagi*@ 
+
+@await Component.InvokeAsync("UserFundsStatus")
+@*await Component.InvokeAsync("UserFundsStatus", new { viewName = "CustomView" })*@

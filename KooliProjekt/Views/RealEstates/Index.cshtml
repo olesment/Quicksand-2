@@ -85,3 +85,6 @@
 </table>
 @*Kudias ajada view component listi k[lge 04.11/ Gunns t 2 v 3. Kui todole pageri panime. *@
 @(await Component.InvokeAsync<PagerViewComponent>(new { result = Model, viewName = "Default" }))
+<div>
+    @await Component.InvokeAsync("UserFundsStatus")
+</div>
