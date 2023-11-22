@@ -1,4 +1,5 @@
 ﻿using KooliProjekt.Data;
+using KooliProjekt.Models;
 
 namespace KooliProjekt.Services// loodud 05.11 t3 raames
 {
@@ -9,5 +10,6 @@ namespace KooliProjekt.Services// loodud 05.11 t3 raames
         Task Save(RealEstate realEstate);
         Task Delete(int id);
         bool RealEstateExists(int id);
+        Task<bool> PurchaseRealEstate(PurchaseRealEstatesViewModel model);
     }
 }

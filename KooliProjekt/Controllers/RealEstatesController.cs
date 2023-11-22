@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KooliProjekt.Data;
 using KooliProjekt.Services;
+using KooliProjekt.Models; // kasutatakse purchase jaoks. 22.11
 
 namespace KooliProjekt.Controllers
 {
@@ -176,6 +177,26 @@ namespace KooliProjekt.Controllers
         {
          return _realEstatesService.RealEstateExists(id);
          //return (_context.RealEstates?.Any(e => e.RealEstateId == id)).GetValueOrDefault();
+        }
+
+        //23.11 ostmise ja m[[gu lisamine
+        [HttpPost]
+        public async Task<IActionResult> PurchaseRealEstate(PurchaseRealEstatesViewModel model) // selle jaoks pildi models lisama
+        {
+            if (ModelState.IsValid)
+            {
+                bool success = await _realEstatesService.PurchaseRealEstate(model);
+                if (success)
+                {
+                    return RedirectToAction(nameof(Index), new { message = "Purchase success" });
+                }
+                else
+                {
+                    return View(model);
+                }
+                
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

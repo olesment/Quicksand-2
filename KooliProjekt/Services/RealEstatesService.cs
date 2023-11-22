@@ -1,6 +1,9 @@
 ﻿using KooliProjekt.Data; //loodud 05.11 T3 raames. 
+using KooliProjekt.Models;
 using Microsoft.AspNetCore.Authentication.OAuth.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using System.Xml;
 
 namespace KooliProjekt.Services
 {
@@ -53,6 +56,36 @@ namespace KooliProjekt.Services
             return (_context.RealEstates?.Any(e => e.RealEstateId == id)).GetValueOrDefault();
             
         }
-    }   
+       
+        public async Task<bool>PurchaseRealEstate(PurchaseRealEstatesViewModel model)
+        {
+            var userFunds = await _context.UserFunds.FirstOrDefaultAsync();
+            if(userFunds.Balance < model.PurchasePrice)
+            {
+                return false;
+            }
+            
+            var newRealEstate = new RealEstate
+            {
+                    RealEstateName = model.RealEstateName,
+                    RealEstateCountry = model.RealEstateCountry,
+                    RealEstateCity = model.RealEstateCity,
+                    RealEstateAddress = model.RealEstateAddress,
+                    PurchaseDate = DateTime.UtcNow,
+                    PurchasePrice = model.PurchasePrice,
+                    CurrentValue = model.PurchasePrice,
+                    LastCurrentValueChangeTime = DateTime.UtcNow,
+                    CurrentlyOwned = true
 
+             };
+            _context.RealEstates.Add(newRealEstate);
+
+            userFunds.Balance = userFunds.Balance - model.PurchasePrice;
+            userFunds.LockedFunds += model.PurchasePrice;
+
+            await _context.SaveChangesAsync();
+            return true;    
+                   
+        }
+    }   
 }

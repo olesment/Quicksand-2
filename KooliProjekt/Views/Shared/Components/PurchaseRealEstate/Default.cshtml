@@ -1,0 +1,33 @@
+﻿
+@model KooliProjekt.Models.PurchaseRealEstatesViewModel
+
+<form asp-controller="RealEstates" asp-action="PurchaseRealEstate" method="post">
+    @* Add the form fields here, using @Html.EditorFor or <input> elements *@
+    <div class="form-group">
+        <label asp-for="RealEstateName">Name:</label>
+        <input asp-for="RealEstateName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="RealEstateCountry">Country:</label>
+        <input asp-for="RealEstateName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="RealEstateCity">City:</label>
+        <input asp-for="RealEstateName" class="form-control" />
+    </div>
+        <div class="form-group">
+        <label asp-for="RealEstateAddress">Address:</label>
+        <input asp-for="RealEstateName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="RealEstateName">Name:</label>
+        <input asp-for="RealEstateName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="PurchasePrice">PurchasePrice:</label>
+        <input asp-for="RealEstateName" class="form-control" />
+    </div>
+
+    
+    <button type="submit" class="btn btn-primary">Purchase</button>
+</form>

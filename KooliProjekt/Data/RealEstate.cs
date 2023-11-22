@@ -14,10 +14,12 @@ namespace KooliProjekt.Data
         public decimal? PurchasePrice { get; set; }
         public decimal? CurrentValue { get; set; }
         [DataType(DataType.Date)]
-        public DateTime? LastCurrentValueChangeTime {  get; set; }
+        public DateTime? LastCurrentValueChangeTime { get; set; }
         public string? InvestmentType { get; } = "RealEstate";
 
-       // public User User { get; set; } kuidagi peab useriga ju siduma
-        public bool CurrentlyOwned { get; set; }
+        // public User User { get; set; } kuidagi peab useriga ju siduma
+        public bool CurrentlyOwned { get; set; } // maybe thats unnecessary
+
+        //UserID peaks ka olema siin sest see peaks hoidma selle konkreetse kasutaja kinnisvara. 
     }
 }
