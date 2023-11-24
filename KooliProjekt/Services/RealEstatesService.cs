@@ -75,6 +75,7 @@ namespace KooliProjekt.Services
                     PurchasePrice = model.PurchasePrice,
                     CurrentValue = model.PurchasePrice,
                     LastCurrentValueChangeTime = DateTime.UtcNow,
+                    //InvestmentType = "RealEstate",
                     CurrentlyOwned = true
 
              };
@@ -83,6 +84,19 @@ namespace KooliProjekt.Services
             userFunds.Balance -= model.PurchasePrice.Value; // siin istub mingi viga, mis genereerib nein NULL e
             userFunds.LockedFunds += model.PurchasePrice.Value;
 
+            await _context.SaveChangesAsync(); // see salvestab tehingu mille k'igus genereeritakse uus assetID, mida saab kasutada tehingu [leskirjutamiseks Transactions tabelisse.
+
+            var transactionRecord = new Transactions
+            {
+                TransactionTime =newRealEstate.PurchaseDate,
+                InvestmentType = "RealEstate",
+                AssetId = newRealEstate.RealEstateId,
+                Action = "Purchase",
+                TransactedAmount = 1,
+                TransactionUnitCost = newRealEstate.PurchasePrice.Value,
+
+            };
+            _context.Transactions.Add(transactionRecord);
             await _context.SaveChangesAsync();
             return true;    
                    

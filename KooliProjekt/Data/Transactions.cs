@@ -8,11 +8,11 @@ namespace KooliProjekt.Data
         public DateTime? TransactionTime { get;set;}
         public string? InvestmentType { get;set; }
         public int AssetId { get; set; }
-        public string? Action {  get; set; } // buy or sell
+        public string? Action {  get; set; } // Purchase or sell
         public int? TransactedAmount {  get;set;}
         public decimal? TransactionUnitCost {  get;set;}
         public decimal? TransactionResult { get;set;} // the sumtotal of transaction
-        public User User { get;set;}
+        public User? User { get;set;}
 
     }
 }
