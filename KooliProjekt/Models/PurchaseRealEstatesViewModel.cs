@@ -6,7 +6,6 @@
         public string? RealEstateCountry { get; set; }
         public string? RealEstateCity { get; set; }
         public string? RealEstateAddress { get; set; }
-        //public DateTime? PurchaseDate { get; set; }
         public decimal? PurchasePrice { get; set; }
 
     }

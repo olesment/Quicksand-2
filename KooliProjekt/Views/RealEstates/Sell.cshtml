@@ -1,0 +1,25 @@
+﻿
+@model KooliProjekt.Models.SellRealEstatesViewModel
+@{
+    ViewData["Title"] = "Sell Real Estate";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action = "Sell" method="post">
+    
+        @Html.HiddenFor(m => m.RealEstate.RealEstateId)
+    <div>
+        <label>Property Name: @Model.RealEstate.RealEstateName</label>
+        
+    </div>
+    <div>
+        <label>Selling Price:</label>
+        <input asp-for="SellingPrice" type="number"/>
+        <span asp-validation-for = "SellingPrice" class="text-danger"></span>
+
+    </div>
+    <button type="submit">Confirm Sale</button>
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</form>

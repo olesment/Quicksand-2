@@ -7,10 +7,10 @@ using System.Xml;
 
 namespace KooliProjekt.Services
 {
-    public class RealEstatesService: IRealEstatesService
+    public class RealEstatesService : IRealEstatesService
     {
         private readonly ApplicationDbContext _context;
-        public RealEstatesService(ApplicationDbContext context) 
+        public RealEstatesService(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -30,7 +30,7 @@ namespace KooliProjekt.Services
         }
         public async Task Save(RealEstate realEstate)
         {
-            if(realEstate.RealEstateId == null)
+            if (realEstate.RealEstateId == null)
             {
                 _context.Add(realEstate);
             }
@@ -41,7 +41,7 @@ namespace KooliProjekt.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(int id) 
+        public async Task Delete(int id)
         {
             var realEstate = await _context.RealEstates.FindAsync(id);
             if (realEstate != null)
@@ -54,41 +54,41 @@ namespace KooliProjekt.Services
         public bool RealEstateExists(int id)
         {
             return (_context.RealEstates?.Any(e => e.RealEstateId == id)).GetValueOrDefault();
-            
+
         }
-       
-        public async Task<bool>PurchaseRealEstate(PurchaseRealEstatesViewModel model)
+
+        public async Task<bool> PurchaseRealEstate(PurchaseRealEstatesViewModel model)
         {
             var userFunds = await _context.UserFunds.FirstOrDefaultAsync();
-            if(userFunds.Balance < model.PurchasePrice)
+            if (userFunds.Balance < model.PurchasePrice)
             {
                 return false;
             }
-            
+
             var newRealEstate = new RealEstate
             {
-                    RealEstateName = model.RealEstateName,
-                    RealEstateCountry = model.RealEstateCountry,
-                    RealEstateCity = model.RealEstateCity,
-                    RealEstateAddress = model.RealEstateAddress,
-                    PurchaseDate = DateTime.UtcNow,
-                    PurchasePrice = model.PurchasePrice,
-                    CurrentValue = model.PurchasePrice,
-                    LastCurrentValueChangeTime = DateTime.UtcNow,
-                    //InvestmentType = "RealEstate",
-                    CurrentlyOwned = true
+                RealEstateName = model.RealEstateName,
+                RealEstateCountry = model.RealEstateCountry,
+                RealEstateCity = model.RealEstateCity,
+                RealEstateAddress = model.RealEstateAddress,
+                PurchaseDate = DateTime.UtcNow,
+                PurchasePrice = model.PurchasePrice,
+                CurrentValue = model.PurchasePrice,
+                LastCurrentValueChangeTime = DateTime.UtcNow,
+                //InvestmentType = "RealEstate", // automaateselt pandud
+                CurrentlyOwned = true
 
-             };
+            };
             _context.RealEstates.Add(newRealEstate);
 
-            userFunds.Balance -= model.PurchasePrice.Value; // siin istub mingi viga, mis genereerib nein NULL e
+            userFunds.Balance -= model.PurchasePrice.Value;// Kodra tehtud viga ili cshtmlis// siin istub mingi viga, mis genereerib nein NULL e
             userFunds.LockedFunds += model.PurchasePrice.Value;
 
             await _context.SaveChangesAsync(); // see salvestab tehingu mille k'igus genereeritakse uus assetID, mida saab kasutada tehingu [leskirjutamiseks Transactions tabelisse.
 
             var transactionRecord = new Transactions
             {
-                TransactionTime =newRealEstate.PurchaseDate,
+                TransactionTime = newRealEstate.PurchaseDate,
                 InvestmentType = "RealEstate",
                 AssetId = newRealEstate.RealEstateId,
                 Action = "Purchase",
@@ -98,8 +98,41 @@ namespace KooliProjekt.Services
             };
             _context.Transactions.Add(transactionRecord);
             await _context.SaveChangesAsync();
-            return true;    
-                   
+            return true;
+
         }
-    }   
+        //25.11
+        public async Task<bool> SellRealEstate(int realEstateId, decimal sellingPrice)
+        {
+            var realEstate = await _context.RealEstates.FindAsync(realEstateId);
+            if (realEstate == null || !realEstate.CurrentlyOwned)
+            {
+                return false;
+            }
+            var userFunds = await _context.UserFunds.FirstOrDefaultAsync();
+
+            if (userFunds == null)
+            {
+                return false;
+            }
+
+            realEstate.CurrentlyOwned = false;
+            // realEstate.CurrentValue = sellingPrice;
+            var transactionRecord = new Transactions
+            {
+                TransactionTime = DateTime.UtcNow,
+                InvestmentType = "RealEstate",
+                AssetId = realEstateId,
+                Action = "Sell",
+                TransactedAmount = 1,
+                TransactionUnitCost = sellingPrice,
+                TransactionResult = sellingPrice,
+
+            };
+
+            _context.Transactions.Add(transactionRecord);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+    }
 }

@@ -198,5 +198,47 @@ namespace KooliProjekt.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+        //selling Real Estate
+        //GET:RealEstates/Sell
+
+        //SELLLSELLLSELLLLSELLLLSELLLL
+        //[HttpPost]
+        [HttpGet]
+        public async Task<IActionResult> Sell(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound("Id is null");
+            }
+
+            var realEstate = await _realEstatesService.GetById(id.Value);
+            if (realEstate == null)
+            {
+                return NotFound($"No RealEstate found for ID {id.Value}");
+            }
+
+            var viewModel = new SellRealEstatesViewModel
+            {
+                RealEstate = realEstate,
+                SellingPrice = realEstate.CurrentValue ?? 0
+            };
+
+            return View(viewModel);
+        }
+
+        //25.11 selli lisamine
+        [HttpPost]
+        public async Task<IActionResult> Sell(SellRealEstatesViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var success = await _realEstatesService.SellRealEstate(model.RealEstate.RealEstateId, model.SellingPrice.Value);
+                if (success)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            return View(model);
+        } 
     }
 }

@@ -11,5 +11,6 @@ namespace KooliProjekt.Services// loodud 05.11 t3 raames
         Task Delete(int id);
         bool RealEstateExists(int id);
         Task<bool> PurchaseRealEstate(PurchaseRealEstatesViewModel model);
+        Task<bool> SellRealEstate(int realEstateId, decimal sellingPrice);
     }
 }

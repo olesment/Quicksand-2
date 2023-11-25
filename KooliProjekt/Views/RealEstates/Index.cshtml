@@ -75,6 +75,8 @@
                 @Html.DisplayFor(modelItem => item.CurrentlyOwned)
             </td>
             <td>
+                @*Lisan Nupu 25.11 myygiks*@
+                <a asp-action="Sell" asp-route-id="@item.RealEstateId">Sell</a>
                 <a asp-action="Edit" asp-route-id="@item.RealEstateId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.RealEstateId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.RealEstateId">Delete</a>
