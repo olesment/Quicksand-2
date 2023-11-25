@@ -116,7 +116,10 @@ namespace KooliProjekt.Services
                 return false;
             }
 
+            userFunds.Balance += sellingPrice;
+            userFunds.LockedFunds -= sellingPrice;
             realEstate.CurrentlyOwned = false;
+
             // realEstate.CurrentValue = sellingPrice;
             var transactionRecord = new Transactions
             {

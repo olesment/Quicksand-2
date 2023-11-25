@@ -1,4 +1,5 @@
-﻿@model IEnumerable<KooliProjekt.Data.Transactions>
+﻿@*model IEnumerable<KooliProjekt.Data.Transactions>*@
+@model PagedResult<Transactions>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,33 +13,41 @@
 <table class="table">
     <thead>
         <tr>
+            
             <th>
-                @Html.DisplayNameFor(model => model.TransactionTime)
+                Transaction ID@*Html.DisplayNameFor(model => model.TransactionId) <!-- Display header for Transaction ID -->*@
+            </th>
+
+            <th>
+                Transaction Time @*Html.DisplayNameFor(model => model.TransactionTime)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InvestmentType)
+                Investment Type @*Html.DisplayNameFor(model => model.InvestmentType)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AssetId)
+                Asset ID @*Html.DisplayNameFor(model => model.AssetId)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Action)
+                Action @*Html.DisplayNameFor(model => model.Action)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactedAmount)
+                Transacterd Amount @*Html.DisplayNameFor(model => model.TransactedAmount)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactionUnitCost)
+                Transaction Unit Cost @*Html.DisplayNameFor(model => model.TransactionUnitCost)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TransactionResult)
+                Transaction result @*Html.DisplayNameFor(model => model.TransactionResult)*@
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Results) {@*Pageri jaoks peab siin olema Model.Results. *@
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactionId) @*siin peab olema item*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TransactionTime)
             </td>
@@ -69,3 +78,4 @@
 }
     </tbody>
 </table>
+@(await Component.InvokeAsync<PagerViewComponent>(new { result = Model, viewName = "Default" }))@*annab siin errori mingil p]hjusel*@ 

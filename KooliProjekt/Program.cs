@@ -27,7 +27,7 @@ namespace KooliProjekt
             builder.Services.AddScoped<IRealEstatesService, RealEstatesService>(); //Add IrealEstatesService millele vastab RealEstates Service 05.11. t3
             builder.Services.AddScoped<IUserFundsTransactionsService, UserFundsTransactionsService>(); // lisatud 19.11 Kasutagja vahendite service t;;tamiseks. 
             builder.Services.AddScoped<IUserFundsStatusViewModelService, UserFundsStatusViewModelService>();///23.11
-            
+            builder.Services.AddScoped<ITransactionsService, TransactionsService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
