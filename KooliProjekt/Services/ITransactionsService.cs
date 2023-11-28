@@ -1,5 +1,6 @@
 ﻿using KooliProjekt.Data;
 using KooliProjekt.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KooliProjekt.Services
 {
@@ -10,5 +11,7 @@ namespace KooliProjekt.Services
         Task<Transactions> GetById(int id);
         Task Save(Transactions transaction);
         Task Delete(int id);
+        //Task<IActionResult> Edit(int? id);
+        
     }
 }

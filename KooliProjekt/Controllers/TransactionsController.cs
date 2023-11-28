@@ -15,14 +15,14 @@ namespace KooliProjekt.Controllers
     {
         private readonly ITransactionsService _transactionsService
             ;
-        private readonly ApplicationDbContext _context;
+        //private readonly ApplicationDbContext _context;
 
         public TransactionsController(ITransactionsService transactionsService)
         {
             _transactionsService = transactionsService;
         }
 
-        //PAGER
+        //PAGER//INDEX INDEX
         public async Task<IActionResult> Index(int page = 1)
         {
             var result = await _transactionsService.List(page, 3);
@@ -76,7 +76,7 @@ namespace KooliProjekt.Controllers
             return View();
         }
 
-        // POST: Transactions/Create
+        // POST: Transactions/Create //28.11 muudetud. POLE TEGELIKULT KINDEL KAS SEDA VAJA ON JA KAS J"TTA!
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -85,27 +85,29 @@ namespace KooliProjekt.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(transactions);
-                await _context.SaveChangesAsync();
+                await _transactionsService.Save(transactions); //28.11 siin v]ib olla mingi jura transaction vs transactions
                 return RedirectToAction(nameof(Index));
+                //_context.Add(transactions);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
             }
-            return View(transactions);
+            return View(transactions); // 28.11 sama jama nimedega 
         }
 
         // GET: Transactions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Transactions == null)
+            if (id == null /*|| _context.Transactions == null*/)
             {
                 return NotFound();
             }
 
-            var transactions = await _context.Transactions.FindAsync(id);
-            if (transactions == null)
+            var transaction = await _transactionsService.GetById(id.Value);
+            if (transaction == null)
             {
                 return NotFound();
             }
-            return View(transactions);
+            return View(transaction);
         }
 
         // POST: Transactions/Edit/5
@@ -122,22 +124,23 @@ namespace KooliProjekt.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(transactions);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TransactionsExists(transactions.TransactionId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                //try
+                //{
+                //    _context.Update(transactions);
+                //    await _context.SaveChangesAsync();
+                //}
+                //catch (DbUpdateConcurrencyException)
+                //{
+                //    if (!TransactionsExists(transactions.TransactionId))
+                //    {
+                //        return NotFound();
+                //    }
+                //    else
+                //    {
+                //        throw;
+                //    }
+                //}
+                await _transactionsService.Save(transactions);
                 return RedirectToAction(nameof(Index));
             }
             return View(transactions);
@@ -146,13 +149,13 @@ namespace KooliProjekt.Controllers
         // GET: Transactions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Transactions == null)
+            if (id == null /*|| _context.Transactions == null*/)
             {
                 return NotFound();
             }
 
-            var transactions = await _context.Transactions
-                .FirstOrDefaultAsync(m => m.TransactionId == id);
+            var transactions = await _transactionsService.GetById(id.Value);
+                //.FirstOrDefaultAsync(m => m.TransactionId == id);
             if (transactions == null)
             {
                 return NotFound();
@@ -166,23 +169,24 @@ namespace KooliProjekt.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Transactions == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Transactions'  is null.");
-            }
-            var transactions = await _context.Transactions.FindAsync(id);
-            if (transactions != null)
-            {
-                _context.Transactions.Remove(transactions);
-            }
-            
-            await _context.SaveChangesAsync();
+            //if (_context.Transactions == null)
+            //{
+            //    return Problem("Entity set 'ApplicationDbContext.Transactions'  is null.");
+            //}
+            //var transactions = await _context.Transactions.FindAsync(id);
+            //if (transactions != null)
+            //{
+            //    _context.Transactions.Remove(transactions);
+            //}
+
+            //await _context.SaveChangesAsync();
+            await _transactionsService.Delete(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TransactionsExists(int id)
-        {
-          return (_context.Transactions?.Any(e => e.TransactionId == id)).GetValueOrDefault();
-        }
+        //private bool TransactionsExists(int id)
+        //{
+        //  return (_context.Transactions?.Any(e => e.TransactionId == id)).GetValueOrDefault();
+        //}
     }
 }
