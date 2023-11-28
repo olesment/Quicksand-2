@@ -29,5 +29,20 @@ namespace KooliProjekt.Services //25.11
             return result;
         }
 
+        //28.11 Lisatud Save. Save eraldi nagu kontrolleris ei ole, see oleks pigem nagu helper vms 
+        public async Task Save(Transactions transaction)
+        {
+            if (transaction.TransactionId == null)
+            {
+                _context.Add(transaction);
+            }
+            else
+            {
+                _context.Update(transaction);
+            }
+            await _context.SaveChangesAsync();
+        }
+
+
     }
 }

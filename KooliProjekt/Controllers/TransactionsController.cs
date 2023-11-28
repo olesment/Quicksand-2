@@ -71,7 +71,7 @@ namespace KooliProjekt.Controllers
         //}
 
         // GET: Transactions/Create
-        public IActionResult Create()
+        public IActionResult Create() // 28.11 pole tegelt kindel kas seda siia yldse vaja on. 
         {
             return View();
         }
