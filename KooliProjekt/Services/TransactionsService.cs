@@ -22,6 +22,12 @@ namespace KooliProjekt.Services //25.11
 
             return result;
         }
+        //28.11 lisan getByID
+        public async Task<Transactions>GetById(int id)
+        {
+            var result = await _context.Transactions.FirstOrDefaultAsync(m=>m.TransactionId == id);
+            return result;
+        }
 
     }
 }

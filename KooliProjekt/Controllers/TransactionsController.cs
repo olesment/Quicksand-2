@@ -25,7 +25,7 @@ namespace KooliProjekt.Controllers
         //PAGER
         public async Task<IActionResult> Index(int page = 1)
         {
-            var result = await _transactionsService.List(page, 3); 
+            var result = await _transactionsService.List(page, 3);
             return View(result);
         }
 
@@ -38,22 +38,37 @@ namespace KooliProjekt.Controllers
         //}
 
         // GET: Transactions/Details/5
+        //DETAILS WITH GET BY ID --------------------------------!
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Transactions == null)
+            if(id == null)
             {
                 return NotFound();
             }
-
-            var transactions = await _context.Transactions
-                .FirstOrDefaultAsync(m => m.TransactionId == id);
-            if (transactions == null)
+            var transaction = await _transactionsService.GetById(id.Value);
+            if (transaction == null)
             {
                 return NotFound();
             }
-
-            return View(transactions);
+            return View(transaction);
         }
+
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Transactions == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var transactions = await _context.Transactions
+        //        .FirstOrDefaultAsync(m => m.TransactionId == id);
+        //    if (transactions == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(transactions);
+        //}
 
         // GET: Transactions/Create
         public IActionResult Create()
