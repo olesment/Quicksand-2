@@ -43,6 +43,17 @@ namespace KooliProjekt.Services //25.11
             await _context.SaveChangesAsync();
         }
 
+        //28.11 Delete - arvan et see ei peaks olema transactionite funktsionaalsuses
+
+        public async Task Delete(int id)
+        {
+            var transaction = await _context.Transactions.FindAsync(id);
+            if(transaction !=null)
+            {
+                _context.Transactions.Remove(transaction);
+            }
+            await _context.SaveChangesAsync();
+        }
 
     }
 }

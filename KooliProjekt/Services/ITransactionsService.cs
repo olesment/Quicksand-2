@@ -9,5 +9,6 @@ namespace KooliProjekt.Services
         //28.11
         Task<Transactions> GetById(int id);
         Task Save(Transactions transaction);
+        Task Delete(int id);
     }
 }
