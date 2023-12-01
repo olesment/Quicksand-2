@@ -1,5 +1,5 @@
 ﻿@*model IEnumerable<KooliProjekt.Data.Transactions>*@
-@model PagedResult<Transactions>
+@model PagedResult<TransactionsViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,20 +15,26 @@
         <tr>
             
             <th>
+                Transaction Time @*Html.DisplayNameFor(model => model.TransactionTime)*@
+            </th>
+            <th>
                 Transaction ID@*Html.DisplayNameFor(model => model.TransactionId) <!-- Display header for Transaction ID -->*@
             </th>
 
             <th>
-                Transaction Time @*Html.DisplayNameFor(model => model.TransactionTime)*@
-            </th>
-            <th>
-                Investment Type @*Html.DisplayNameFor(model => model.InvestmentType)*@
-            </th>
-            <th>
                 Asset ID @*Html.DisplayNameFor(model => model.AssetId)*@
             </th>
             <th>
+                Asset Name @*Html.DisplayNameFor(model => model.AssetId)*@
+            </th>
+           @*  <th>
+                Investment Type @*Html.DisplayNameFor(model => model.InvestmentType)*@
+            @*</th> *@
+            <th>
                 Action @*Html.DisplayNameFor(model => model.Action)*@
+            </th>
+            <th>
+                Balance Before @*Html.DisplayNameFor(model => model.AssetId)*@
             </th>
             <th>
                 Transacterd Amount @*Html.DisplayNameFor(model => model.TransactedAmount)*@
@@ -37,42 +43,53 @@
                 Transaction Unit Cost @*Html.DisplayNameFor(model => model.TransactionUnitCost)*@
             </th>
             <th>
-                Transaction result @*Html.DisplayNameFor(model => model.TransactionResult)*@
+                Transaction Sum @*Html.DisplayNameFor(model => model.TransactionResult)*@
             </th>
-            <th></th>
+            <th>
+                Balance after
+            </th>
+            <th>
+                Asset Type
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.Results) {@*Pageri jaoks peab siin olema Model.Results. *@
         <tr>
+            <td>@Html.DisplayFor(nodelItem => item.TransactionTime)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.TransactionId) @*siin peab olema item*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransactionTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvestmentType)
-            </td>
+                @Html.DisplayFor(modelItem => item.TransactionID) @*siin peab olema item*@
             <td>
                 @Html.DisplayFor(modelItem => item.AssetId)
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.AssetName)</td>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Action)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TransactedAmount)
+                @Html.DisplayFor(modelItem => item.BalanceBefore)
+            </td>
+            
+            <td>
+                @Html.DisplayFor(modelItem => item.TransactedUnitAmount)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TransactionUnitCost)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TransactionResult)
+                @Html.DisplayFor(modelItem => item.TransactionSum)
             </td>
+              <td>
+                @Html.DisplayFor(modelItem => item.BalanceAfter)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AssetType)
+                </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.TransactionId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TransactionId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TransactionId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.TransactionID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.TransactionID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TransactionID">Delete</a>
             </td>
         </tr>
 }

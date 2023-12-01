@@ -4,6 +4,7 @@ using KooliProjekt.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KooliProjekt.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231129125632_TransactionsGetNewFields")]
+    partial class TransactionsGetNewFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,12 +177,6 @@ namespace KooliProjekt.Data.Migrations
                     b.Property<string>("InvestmentType")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("LockedFunds")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal?>("LossOrProfit")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<int?>("PortfolioId")
                         .HasColumnType("int");
 
@@ -196,9 +192,14 @@ namespace KooliProjekt.Data.Migrations
                     b.Property<decimal?>("TransactionUnitCost")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("TransactionId");
 
                     b.HasIndex("PortfolioId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
                 });
@@ -511,6 +512,12 @@ namespace KooliProjekt.Data.Migrations
                     b.HasOne("KooliProjekt.Data.Portfolio", null)
                         .WithMany("RecentTransactionsList")
                         .HasForeignKey("PortfolioId");
+
+                    b.HasOne("KooliProjekt.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -7,19 +7,45 @@ using System.Xml;
 
 namespace KooliProjekt.Services //25.11
 {
-    public class TransactionsService: ITransactionsService
+    public class TransactionsService : ITransactionsService
     {
         private readonly ApplicationDbContext _context;
-        
-            public TransactionsService(ApplicationDbContext context)
+
+        public TransactionsService(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<PagedResult<Transactions>> List(int page, int pageSize) // pole kindel mis sisemisesse <> l'heb 05.11
-        {
-            var result = await _context.Transactions.GetPagedAsync(page, pageSize: 3);
+        /*public async Task<PagedResult<Transactions>> List(int page, int pageSize) // pole kindel mis sisemisesse <> l'heb 05.11
+        //{
+        //    var result = await _context.Transactions.GetPagedAsync(page, pageSize: 3);
 
+        //    return result;
+        /*}*/ //PROOvin siin teha nii et annaks tagasi mulle sobiliku view modeli. 
+
+        public async Task<PagedResult<TransactionsViewModel>> List(int page, int pageSize)
+        {
+            var transactionsQueryForTransactionsViewModel = _context.Transactions.Select(t => new TransactionsViewModel
+            //siia peab vast panema for eachi kunagi ja selle sisse omakorda ifid, kui record od on nt stock siis tee seda.
+            {
+                TransactionTime = t.TransactionTime,
+                TransactionID = t.TransactionId,
+                AssetId = t.AssetId,
+
+                AssetName = _context.RealEstates.Where(re => re.RealEstateId == t.AssetId)
+                                                .Select(re => re.RealEstateName)
+                                                .FirstOrDefault(),
+
+                Action = t.Action,
+                BalanceBefore = t.BalanceBefore,
+                TransactedUnitAmount = t.TransactedAmount,
+                TransactionUnitCost = t.TransactionUnitCost,
+                TransactionSum = t.TransactionResult,
+                BalanceAfter = t.BalanceAfter,
+                AssetType = t.InvestmentType
+
+            });
+            var result = await transactionsQueryForTransactionsViewModel.GetPagedAsync(page, pageSize: 3);
             return result;
         }
 

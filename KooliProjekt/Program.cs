@@ -28,7 +28,7 @@ namespace KooliProjekt
             builder.Services.AddScoped<IUserFundsTransactionsService, UserFundsTransactionsService>(); // lisatud 19.11 Kasutagja vahendite service t;;tamiseks. 
             builder.Services.AddScoped<IUserFundsStatusViewModelService, UserFundsStatusViewModelService>();///23.11
             builder.Services.AddScoped<ITransactionsService, TransactionsService>();
-            builder.Services.AddScoped<ItransactionsViewModelService, TransactionsViewModelService>();           
+            //builder.Services.AddScoped<ItransactionsViewModelService, TransactionsViewModelService>();           
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

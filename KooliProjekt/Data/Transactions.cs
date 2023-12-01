@@ -14,7 +14,9 @@ namespace KooliProjekt.Data
         public int? TransactedAmount {  get;set;}
         public decimal? TransactionUnitCost {  get;set;}
         public decimal? TransactionResult { get;set;} // the sumtotal of transaction
-        public decimal? BalanceAfter { get;set;} //balance before -transaction result
-        public User? User { get;set;} //
+        public decimal? LockedFunds { get;set; }
+        public decimal? BalanceAfter { get; set; } //balance before -transaction result
+        public decimal? LossOrProfit { get; set; }
+       // public User? User { get;set;} //hetkel pole.
     }
 }

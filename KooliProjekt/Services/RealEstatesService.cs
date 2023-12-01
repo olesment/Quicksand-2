@@ -65,6 +65,9 @@ namespace KooliProjekt.Services
                 return false;
             }
 
+            //29.11 lisatud peale seda kui transactions tabelit muutsin
+            var balanceBefore = userFunds.Balance.Value;
+
             var newRealEstate = new RealEstate
             {
                 RealEstateName = model.RealEstateName,
@@ -86,14 +89,28 @@ namespace KooliProjekt.Services
 
             await _context.SaveChangesAsync(); // see salvestab tehingu mille k'igus genereeritakse uus assetID, mida saab kasutada tehingu [leskirjutamiseks Transactions tabelisse.
 
+            var balanceAfter = userFunds.Balance.Value;
+            var lockedFunds = userFunds.LockedFunds.Value;
+            var transactionResult = 0;
+            var transactedAmount = 1;
+                balanceAfter -= model.PurchasePrice.Value;
+                lockedFunds += model.PurchasePrice.Value;
+                transactionResult = (int)model.PurchasePrice.Value * transactedAmount; //int vs decimal
+
             var transactionRecord = new Transactions
             {
+                //TransactionId should autoincrement 
                 TransactionTime = newRealEstate.PurchaseDate,
                 InvestmentType = "RealEstate",
                 AssetId = newRealEstate.RealEstateId,
                 Action = "Purchase",
+                BalanceBefore = balanceBefore,
                 TransactedAmount = 1,
                 TransactionUnitCost = newRealEstate.PurchasePrice.Value,
+                TransactionResult = transactionResult,
+                LockedFunds = lockedFunds,
+                BalanceAfter = balanceAfter, 
+                LossOrProfit = 0
 
             };
             _context.Transactions.Add(transactionRecord);
