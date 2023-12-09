@@ -131,8 +131,8 @@ namespace KooliProjekt.Services
         //25.11
         public async Task<bool> SellRealEstate(int realEstateId, decimal sellingPrice)
         {
-            await _repository.SellRealEstate(realEstateId, sellingPrice);
-            return true;
+            
+            return await _repository.SellRealEstate(realEstateId, sellingPrice);
             //because its bool it gave error if i didnt have return. 
         }
         
