@@ -105,7 +105,7 @@ namespace KooliProjekt.Data.Repositories
             };
             _context.RealEstates.Add(newRealEstate);
 
-            userFunds.Balance -= model.PurchasePrice.Value;// Kodra tehtud viga ili cshtmlis// siin istub mingi viga, mis genereerib nein NULL e
+            userFunds.Balance = balanceBefore - model.PurchasePrice.Value;// Kodra tehtud viga ili cshtmlis// siin istub mingi viga, mis genereerib nein NULL e
             userFunds.LockedFunds += model.PurchasePrice.Value;
 
             await _context.SaveChangesAsync(); // see salvestab tehingu mille k'igus genereeritakse uus assetID, mida saab kasutada tehingu [leskirjutamiseks Transactions tabelisse.
@@ -114,7 +114,7 @@ namespace KooliProjekt.Data.Repositories
             var lockedFunds = userFunds.LockedFunds.Value;
             var transactionResult = 0;
             var transactedAmount = 1;
-            balanceAfter -= model.PurchasePrice.Value;
+            //balanceAfter -= model.PurchasePrice.Value;
             lockedFunds += model.PurchasePrice.Value;
             transactionResult = (int)model.PurchasePrice.Value * transactedAmount; //int vs decimal
 
@@ -154,20 +154,28 @@ namespace KooliProjekt.Data.Repositories
                 return false;
             }
 
-            userFunds.Balance += sellingPrice;
+            var balanceBefore = userFunds.Balance; //Salvestab muutujasse jooksva rahakoti sisu
+            await _context.SaveChangesAsync();
+
+            //var balanceAfter = balanceBefore + sellingPrice; 
+
+            userFunds.Balance = balanceBefore + sellingPrice;
             userFunds.LockedFunds -= sellingPrice;
             realEstate.CurrentlyOwned = false;
-
+            
             // realEstate.CurrentValue = sellingPrice;
             var transactionRecord = new Transactions
             {
                 TransactionTime = DateTime.UtcNow,
-                InvestmentType = "RealEstate",
+                //transactionID should Autoincrement
                 AssetId = realEstateId,
                 Action = "Sell",
+                BalanceBefore = balanceBefore,
                 TransactedAmount = 1,
                 TransactionUnitCost = sellingPrice,
                 TransactionResult = sellingPrice,
+                BalanceAfter = balanceBefore + sellingPrice,
+                InvestmentType = "RealEstate", ///asset type === investmen type
 
             };
 
