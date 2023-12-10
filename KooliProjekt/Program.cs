@@ -32,6 +32,7 @@ namespace KooliProjekt
             //builder.Services.AddScoped<ItransactionsViewModelService, TransactionsViewModelService>(); // 09.12 tbh see tutndub siin sus. Miks see on v'ljakommenteeritud??
             //t5 09.12 lisan repository interfacei
             builder.Services.AddScoped<IRealEstatesRepository, RealEstatesRepository>();
+            builder.Services.AddScoped<ITransactionsRepository, TransactionsRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

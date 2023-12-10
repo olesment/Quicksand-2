@@ -114,7 +114,7 @@ namespace KooliProjekt.Data.Repositories
             var lockedFunds = userFunds.LockedFunds.Value;
             var transactionResult = 0;
             var transactedAmount = 1;
-            //balanceAfter -= model.PurchasePrice.Value;
+            balanceAfter -= model.PurchasePrice.Value;
             lockedFunds += model.PurchasePrice.Value;
             transactionResult = (int)model.PurchasePrice.Value * transactedAmount; //int vs decimal
 
