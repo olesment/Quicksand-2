@@ -8,6 +8,10 @@
             _context = context;
         }
 
-
+        public async Task<PagedResult<UserFundsTransaction>>List(int page, int pageSize)
+        {
+            var result = await _context.UserFundsTransactions.GetPagedAsync(page, pageSize: 3);
+            return result;
+        }
     }
 }

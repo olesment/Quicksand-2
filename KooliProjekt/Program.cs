@@ -33,6 +33,7 @@ namespace KooliProjekt
             //t5 09.12 lisan repository interfacei
             builder.Services.AddScoped<IRealEstatesRepository, RealEstatesRepository>();
             builder.Services.AddScoped<ITransactionsRepository, TransactionsRepository>();
+            builder.Services.AddScoped<IUserFundsTransactionsRepository, UserFundsTransactionsRepository>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
